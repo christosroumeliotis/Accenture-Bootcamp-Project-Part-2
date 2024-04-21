@@ -4,10 +4,12 @@ public class Timeslot {
     private String date;
     private Integer endTime;
     private boolean isAvailable;
+    private String code;
 
-    public Timeslot(String date, Integer endTime) {
+    public Timeslot(String date, Integer endTime,String code) {
         this.date = date;
         this.endTime = endTime;
+        this.code = code;
         isAvailable=true;
     }
 
@@ -26,6 +28,14 @@ public class Timeslot {
 
     public void setEndTime(Integer endTime) {
         this.endTime = endTime;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public boolean isAvailable() {

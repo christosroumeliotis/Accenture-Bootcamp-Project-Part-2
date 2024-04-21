@@ -21,10 +21,10 @@ public class Config {
 
             doctorService.addDoctor(new Doctor("amka1","leo","pavlou"));
 
-            timeslotService.addTimeslot(new Timeslot("20/4/2023 10:30",40));
-            timeslotService.addTimeslot(new Timeslot("21/4/2023 10:30",40));
-            timeslotService.addTimeslot(new Timeslot("22/4/2023 10:30",40));
-            timeslotService.addTimeslot(new Timeslot("20/5/2023 10:30",40));
+            timeslotService.addTimeslot(new Timeslot("20/4/2023 10:30",40,"cd1"));
+            timeslotService.addTimeslot(new Timeslot("21/4/2023 10:30",40,"cd2"));
+            timeslotService.addTimeslot(new Timeslot("22/4/2023 10:30",40,"cd3"));
+            timeslotService.addTimeslot(new Timeslot("20/5/2023 10:30",40,"cd4"));
         };
     }
 }
