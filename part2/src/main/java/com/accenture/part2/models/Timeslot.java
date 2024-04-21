@@ -46,4 +46,8 @@ public class Timeslot {
         isAvailable = available;
     }
 
+    public String toPdfFormat() {
+        return "code: " + code + ", date:" + date;
+    }
+
 }
