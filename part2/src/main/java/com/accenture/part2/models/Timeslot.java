@@ -2,7 +2,6 @@ package com.accenture.part2.models;
 
 public class Timeslot {
     private String date;
-
     private Integer endTime;
     private boolean isAvailable;
 
@@ -36,4 +35,5 @@ public class Timeslot {
     public void setAvailable(boolean available) {
         isAvailable = available;
     }
+
 }
