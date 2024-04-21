@@ -10,6 +10,7 @@ public class Insured {
     private String surname;
     private String email;
     private int timesReservationChanged;
+    private Vaccination vaccinationCoverage;
     @JsonIgnore
     private Reservation reservation;
     @JsonIgnore
@@ -23,6 +24,15 @@ public class Insured {
         this.surname = surname;
         this.email = email;
         timesReservationChanged=0;
+        vaccinationCoverage=null;
+    }
+
+    public Vaccination getVaccinationCoverage() {
+        return vaccinationCoverage;
+    }
+
+    public void setVaccinationCoverage(Vaccination vaccinationCoverage) {
+        this.vaccinationCoverage = vaccinationCoverage;
     }
 
     public String getAfm() {

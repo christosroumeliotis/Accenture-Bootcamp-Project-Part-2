@@ -29,6 +29,10 @@ public class InsuredService {
         return insureds;
     }
 
+    public List<Insured> returnAllInsureds(){
+        return insureds;
+    }
+
     public Reservation makeAReservation(String insuredAmka, String timeslotDate, String doctorAmka) {
         Insured insured=null;
         for(Insured ins:insureds){
@@ -57,13 +61,16 @@ public class InsuredService {
         if(doctor==null){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Doctor with AMKA: "+ doctorAmka+" not found");
         }
-        if(timeslot.isAvailable()){
+        if(timeslot.isAvailable() && insured.getReservation()==null){
             insured.setDoctor(doctor);
             insured.setReservation(reservationService.addReservation(insured,timeslot));
             timeslot.setAvailable(false);
             return insured.getReservation();
-        }else{
+        }else if(!timeslot.isAvailable()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Timeslot at : "+ timeslotDate+" is reserved");
+        }else{
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Insured with AMKA: " +insuredAmka+ " already has a reservation");
+
         }
 
     }

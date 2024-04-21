@@ -25,7 +25,6 @@ public class Config {
             timeslotService.addTimeslot(new Timeslot("21/4/2023 10:30",40));
             timeslotService.addTimeslot(new Timeslot("22/4/2023 10:30",40));
             timeslotService.addTimeslot(new Timeslot("20/5/2023 10:30",40));
-
         };
     }
 }
