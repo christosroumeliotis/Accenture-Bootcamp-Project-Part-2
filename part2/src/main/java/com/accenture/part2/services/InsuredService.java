@@ -22,79 +22,79 @@ public class InsuredService {
     @Autowired
     ReservationService reservationService;
 
-    List<Insured> insureds=new ArrayList<>();
+    List<Insured> insureds = new ArrayList<>();
 
     public List<Insured> addInsured(Insured insured) {
         insureds.add(insured);
         return insureds;
     }
 
-    public List<Insured> returnAllInsureds(){
+    public List<Insured> returnAllInsureds() {
         return insureds;
     }
 
     public Reservation makeAReservation(String insuredAmka, String timeslotDate, String doctorAmka) {
-        Insured insured=null;
-        for(Insured ins:insureds){
-            if(ins.getAmka().equals(insuredAmka)){
-                insured=ins;
+        Insured insured = null;
+        for (Insured ins : insureds) {
+            if (ins.getAmka().equals(insuredAmka)) {
+                insured = ins;
             }
         }
-        if(insured==null){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Insured with AMKA: "+ insuredAmka+" not found");
+        if (insured == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Insured with AMKA: " + insuredAmka + " not found");
         }
-        Timeslot timeslot=null;
-        for(Timeslot t:timeslotService.getAllTimeslots()){
-            if(t.getDate().equals(timeslotDate)){
-                timeslot=t;
+        Timeslot timeslot = null;
+        for (Timeslot t : timeslotService.getAllTimeslots()) {
+            if (t.getDate().equals(timeslotDate)) {
+                timeslot = t;
             }
         }
-        if(timeslot==null){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Timeslot at: "+ timeslotDate+" not found");
+        if (timeslot == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Timeslot at: " + timeslotDate + " not found");
         }
-        Doctor doctor=null;
-        for(Doctor d:doctorService.getAllDoctors()){
-            if(d.getAmka().equals(doctorAmka)){
-                doctor=d;
+        Doctor doctor = null;
+        for (Doctor d : doctorService.getAllDoctors()) {
+            if (d.getAmka().equals(doctorAmka)) {
+                doctor = d;
             }
         }
-        if(doctor==null){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Doctor with AMKA: "+ doctorAmka+" not found");
+        if (doctor == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Doctor with AMKA: " + doctorAmka + " not found");
         }
-        if(timeslot.isAvailable() && insured.getReservation()==null){
+        if (timeslot.isAvailable() && insured.getReservation() == null) {
             insured.setDoctor(doctor);
-            insured.setReservation(reservationService.addReservation(insured,timeslot));
+            insured.setReservation(reservationService.addReservation(insured, timeslot));
             timeslot.setAvailable(false);
             return insured.getReservation();
-        }else if(!timeslot.isAvailable()){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Timeslot at : "+ timeslotDate+" is reserved");
-        }else{
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Insured with AMKA: " +insuredAmka+ " already has a reservation");
+        } else if (!timeslot.isAvailable()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Timeslot at : " + timeslotDate + " is reserved");
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Insured with AMKA: " + insuredAmka + " already has a reservation");
 
         }
 
     }
 
     public String unselectReservation(String insuredAmka) {
-        Insured insured=null;
-        for(Insured ins:insureds){
-            if(ins.getAmka().equals(insuredAmka)){
-                insured=ins;
+        Insured insured = null;
+        for (Insured ins : insureds) {
+            if (ins.getAmka().equals(insuredAmka)) {
+                insured = ins;
             }
         }
-        if(insured==null){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Insured with AMKA: "+ insuredAmka+" not found");
+        if (insured == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Insured with AMKA: " + insuredAmka + " not found");
         }
-        if(insured.getReservation()==null){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Reservation for insured with with AMKA: "+ insuredAmka+" not found, you have to make one first to unselect it");
+        if (insured.getReservation() == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Reservation for insured with with AMKA: " + insuredAmka + " not found, you have to make one first to unselect it");
         }
-        if(insured.getTimesReservationChanged()<2){
+        if (insured.getTimesReservationChanged() < 2) {
             reservationService.deleteReservation(insured.getReservation());
             insured.setReservation(null);
             insured.increaseTimesReservationChanged();
             return "Reservation unselected";
-        }else{
-            throw new ResponseStatusException(HttpStatus.TOO_MANY_REQUESTS,"Insured with with AMKA: "+ insuredAmka+" cant change reservation over 2 times");
+        } else {
+            throw new ResponseStatusException(HttpStatus.TOO_MANY_REQUESTS, "Insured with with AMKA: " + insuredAmka + " cant change reservation over 2 times");
 
         }
 

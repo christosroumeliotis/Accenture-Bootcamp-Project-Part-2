@@ -3,14 +3,14 @@ package com.accenture.part2.services;
 import com.accenture.part2.models.Insured;
 import com.accenture.part2.models.Reservation;
 import com.accenture.part2.models.Timeslot;
-import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 import com.lowagie.text.Document;
 import com.lowagie.text.PageSize;
 import com.lowagie.text.Paragraph;
 import com.lowagie.text.pdf.PdfWriter;
+import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -22,14 +22,14 @@ import java.util.List;
 public class ReservationService {
 
 
-
-    List<Reservation> reservations=new ArrayList<>();
+    List<Reservation> reservations = new ArrayList<>();
 
     public Reservation addReservation(Insured insured, Timeslot timeslot) {
-        Reservation r=new Reservation(insured,timeslot);
+        Reservation r = new Reservation(insured, timeslot);
         reservations.add(r);
         return r;
     }
+
     public void deleteReservation(Reservation reservation) {
         reservations.remove(reservation);
     }
@@ -83,7 +83,7 @@ public class ReservationService {
 
 
     public void exportAllReservationsToPdf(HttpServletResponse response, String doctorAmka, String date) throws IOException {
-        if(!doctorAmkaExists(doctorAmka))   {
+        if (!doctorAmkaExists(doctorAmka)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Doctor's Amka not exists");
         }
 
@@ -114,7 +114,7 @@ public class ReservationService {
 
     private List<Reservation> getDoctorReservations(String doctorAmka, String date) {
         List<Reservation> doctorReservationsByDate = new ArrayList<>();
-        for (Reservation  reservation : reservations) {
+        for (Reservation reservation : reservations) {
             String reservationDate = reservation.getTimeslot().getDate().substring(0, reservation.getTimeslot().getDate().indexOf(" "));
             if (reservationDate.equals(date) && (reservation.getInsured().getDoctor().getAmka().equals(doctorAmka))) {
                 doctorReservationsByDate.add(reservation);

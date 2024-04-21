@@ -3,9 +3,6 @@ package com.accenture.part2.controllers;
 import com.accenture.part2.models.Timeslot;
 import com.accenture.part2.services.TimeslotService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,8 +15,8 @@ public class TimeslotController {
     TimeslotService timeslotService;
 
     @GetMapping
-    public List<Timeslot> getAllTimeslots(){
-        return  timeslotService.getAllTimeslots();
+    public List<Timeslot> getAllTimeslots() {
+        return timeslotService.getAllTimeslots();
     }
 
     /*@GetMapping("/available/date")
@@ -28,7 +25,7 @@ public class TimeslotController {
     }*/
 
     @PostMapping()
-    public List<Timeslot> addTimeslot(@RequestBody Timeslot timeslot){
+    public List<Timeslot> addTimeslot(@RequestBody Timeslot timeslot) {
         return timeslotService.addTimeslot(timeslot);
     }
 }

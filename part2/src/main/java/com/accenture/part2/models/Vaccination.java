@@ -10,10 +10,10 @@ public class Vaccination {
     public Vaccination() {
     }
 
-    public Vaccination(Insured insured,String timeslotCode,String expirationDate) {
+    public Vaccination(Insured insured, String timeslotCode, String expirationDate) {
         this.insured = insured;
         this.expirationDate = expirationDate;
-        this.timeslotCode=timeslotCode;
+        this.timeslotCode = timeslotCode;
     }
 
     public String getTimeslotCode() {
@@ -40,7 +40,6 @@ public class Vaccination {
     public void setExpirationDate(String expirationDate) {
         this.expirationDate = expirationDate;
     }
-
 
 
 }
