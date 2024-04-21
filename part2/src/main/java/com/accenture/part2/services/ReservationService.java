@@ -13,6 +13,8 @@ import com.lowagie.text.Paragraph;
 import com.lowagie.text.pdf.PdfWriter;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,10 +37,27 @@ public class ReservationService {
     public List<Reservation> getReservations() {
         return reservations;
     }
+
+    public List<Reservation> getUpcomingReservations() {
+        List<Reservation> upcomingReservations = new ArrayList<>();
+        LocalDate now = LocalDate.now();
+        for (Reservation reservation : reservations) {
+            if (LocalDate.parse(reservation.getTimeslot().getDate(), DateTimeFormatter.ofPattern("d/M/yyyy HH:mm")).isAfter(now)) {
+                upcomingReservations.add(reservation);
+            }
+        }
+        if (upcomingReservations.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No upcoming reservations ");
+        }
+        return upcomingReservations;
+
+    }
+
     public List<Reservation> getReservationsByDate(String date) {
         List<Reservation> reservationsByDate = new ArrayList<>();
         for (Reservation reservation : reservations) {
-            if (reservation.getTimeslot().getDate().equals(date)) {
+            String reservationDate = reservation.getTimeslot().getDate().substring(0, reservation.getTimeslot().getDate().indexOf(" "));
+            if (reservationDate.equals(date)) {
                 reservationsByDate.add(reservation);
             }
         }
@@ -46,7 +65,6 @@ public class ReservationService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No reservations found for date: " + date);
         }
         return reservationsByDate;
-
     }
 
     public List<Reservation> getAllReservations(int page) {
@@ -54,7 +72,7 @@ public class ReservationService {
         int totalPages = (int) Math.ceil((double) reservations.size() / pageSize);
 
         if (page < 1 || page > totalPages) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "There are "+totalPages+" total pages");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No more reservations found");
         }
 
         int startIndex = (page - 1) * pageSize;
@@ -62,30 +80,46 @@ public class ReservationService {
 
         return reservations.subList(startIndex, endIndex);
     }
-    private List<Reservation> getDoctorReservations(String doctorAmka, String date) {
-        List<Reservation> doctorReservationsByDate = new ArrayList<>();
-        for (Reservation reservation : reservations) {
-            if (reservation.getTimeslot().getDate().equals(date) && (reservation.getInsured().getDoctor().getAmka().equals(doctorAmka))) {
-                doctorReservationsByDate.add(reservation);
-            }
-        }
-        return doctorReservationsByDate;
-    }
+
 
     public void exportAllReservationsToPdf(HttpServletResponse response, String doctorAmka, String date) throws IOException {
+        if(!doctorAmkaExists(doctorAmka))   {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Doctor's Amka not exists");
+        }
+
         Document document = new Document(PageSize.A4);
         PdfWriter.getInstance(document, response.getOutputStream());
 
         List<Reservation> doctorReservationsByDate = getDoctorReservations(doctorAmka, date);
         document.open();
-        document.add(new Paragraph("Doctor AMKA: " + doctorAmka));
+        document.add(new Paragraph("Doctor Amka: " + doctorAmka));
         document.add(new Paragraph("Number of Reservations: " + doctorReservationsByDate.size()));
         if (!doctorReservationsByDate.isEmpty()) {
             document.add(new Paragraph("------------ Timeslots ------------"));
             for (int i = 0; i < doctorReservationsByDate.size(); i++) {
-                document.add(new Paragraph(i+1 + ") " + doctorReservationsByDate.get(i).getTimeslot().getDate()));
+                document.add(new Paragraph((i + 1) + ") " + doctorReservationsByDate.get(i).getTimeslot().toPdfFormat()));
             }
         }
         document.close();
+    }
+
+    private boolean doctorAmkaExists(String amka) {
+        for (Reservation reservation : reservations) {
+            if (reservation.getInsured().getDoctor().getAmka().equals(amka)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private List<Reservation> getDoctorReservations(String doctorAmka, String date) {
+        List<Reservation> doctorReservationsByDate = new ArrayList<>();
+        for (Reservation  reservation : reservations) {
+            String reservationDate = reservation.getTimeslot().getDate().substring(0, reservation.getTimeslot().getDate().indexOf(" "));
+            if (reservationDate.equals(date) && (reservation.getInsured().getDoctor().getAmka().equals(doctorAmka))) {
+                doctorReservationsByDate.add(reservation);
+            }
+        }
+        return doctorReservationsByDate;
     }
 }
