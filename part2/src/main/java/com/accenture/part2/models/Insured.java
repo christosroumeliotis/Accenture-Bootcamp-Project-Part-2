@@ -24,8 +24,8 @@ public class Insured {
         this.birthdate = birthdate;
         this.surname = surname;
         this.email = email;
-        timesReservationChanged=0;
-        vaccinationCoverage=null;
+        timesReservationChanged = 0;
+        vaccinationCoverage = null;
     }
 
     public Vaccination getVaccinationCoverage() {

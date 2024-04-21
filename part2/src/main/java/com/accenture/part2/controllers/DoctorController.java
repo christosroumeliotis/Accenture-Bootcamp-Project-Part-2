@@ -16,11 +16,12 @@ public class DoctorController {
     DoctorService doctorService;
 
     @PostMapping
-    public List<Doctor> addDoctor(@RequestBody Doctor doctor){
+    public List<Doctor> addDoctor(@RequestBody Doctor doctor) {
         return doctorService.addDoctor(doctor);
     }
+
     @PostMapping("/vaccination")
-    public Vaccination addVaccination(@RequestParam String timeslotCode,@RequestParam String insuredAmka,@RequestParam String endDate) {
-        return doctorService.addVaccination(timeslotCode,insuredAmka,endDate);
+    public Vaccination addVaccination(@RequestParam String timeslotCode, @RequestParam String insuredAmka, @RequestParam String endDate) {
+        return doctorService.addVaccination(timeslotCode, insuredAmka, endDate);
     }
 }

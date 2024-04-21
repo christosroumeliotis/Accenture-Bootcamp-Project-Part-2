@@ -33,12 +33,12 @@ public class Config {
 
             doctorService.addDoctor(doctor1);
 
-            timeslotService.addTimeslot(new Timeslot("dc1","20/4/2023 10:30",40));
-            timeslotService.addTimeslot(new Timeslot("dc2","21/4/2023 10:30",40));
-            timeslotService.addTimeslot(new Timeslot("dc3","22/4/2023 10:30",40));
-            timeslotService.addTimeslot(new Timeslot("dc4","20/5/2023 10:30",40));
+            timeslotService.addTimeslot(new Timeslot("dc1", "20/4/2023 10:30", 40));
+            timeslotService.addTimeslot(new Timeslot("dc2", "21/4/2023 10:30", 40));
+            timeslotService.addTimeslot(new Timeslot("dc3", "22/4/2023 10:30", 40));
+            timeslotService.addTimeslot(new Timeslot("dc4", "20/5/2023 10:30", 40));
             Timeslot timeslot1 = new Timeslot("cd1", "20/4/2023 10:30", 40);
-            Timeslot timeslot2 = new Timeslot("cd2" ,"21/4/2023 10:30", 40);
+            Timeslot timeslot2 = new Timeslot("cd2", "21/4/2023 10:30", 40);
             Timeslot timeslot3 = new Timeslot("cd3", "28/4/2024 10:30", 40);
             Timeslot timeslot4 = new Timeslot("cd4", "2/12/2024 20:30", 40);
             timeslotService.addTimeslot(timeslot1);

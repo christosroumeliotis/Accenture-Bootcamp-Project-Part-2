@@ -1,8 +1,6 @@
 package com.accenture.part2.controllers;
 
-import com.accenture.part2.models.Insured;
 import com.accenture.part2.models.Reservation;
-import com.accenture.part2.models.Timeslot;
 import com.accenture.part2.services.ReservationService;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +17,7 @@ public class ReservationController {
     ReservationService reservationService;
 
     @GetMapping()
-    public List<Reservation> getReservations(){
+    public List<Reservation> getReservations() {
         return reservationService.getReservations();
     }
 

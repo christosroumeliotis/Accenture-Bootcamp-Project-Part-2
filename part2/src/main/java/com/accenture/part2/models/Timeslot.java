@@ -6,11 +6,11 @@ public class Timeslot {
     private Integer endTime;
     private boolean isAvailable;
 
-    public Timeslot(String code,String date, Integer endTime) {
-        this.code=code;
+    public Timeslot(String code, String date, Integer endTime) {
+        this.code = code;
         this.date = date;
         this.endTime = endTime;
-        isAvailable=true;
+        isAvailable = true;
     }
 
     public String getCode() {

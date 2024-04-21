@@ -20,6 +20,7 @@ public class DoctorService {
     ReservationService reservationService;
 
     List<Doctor> doctors = new ArrayList<>();
+
     public List<Doctor> getAllDoctors() {
         return doctors;
     }
@@ -30,31 +31,31 @@ public class DoctorService {
     }
 
     public Doctor getDoctor(Doctor doctor) {
-        for(Doctor d:doctors){
-            if(d.getAmka().equals(doctor.getAmka())){
+        for (Doctor d : doctors) {
+            if (d.getAmka().equals(doctor.getAmka())) {
                 return d;
             }
         }
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Doctor with AMKA: "+ doctor.getAmka()+" not found");
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Doctor with AMKA: " + doctor.getAmka() + " not found");
     }
 
     public Vaccination addVaccination(String timeslotCode, String insuredAmka, String endDate) {
-        for(Insured ins:insuredService.returnAllInsureds()){
-            if(ins.getAmka().equals(insuredAmka)){
-                if(ins.getReservation()!=null && ins.getVaccinationCoverage()==null){
-                    Vaccination vc=new Vaccination(ins,timeslotCode,endDate);
+        for (Insured ins : insuredService.returnAllInsureds()) {
+            if (ins.getAmka().equals(insuredAmka)) {
+                if (ins.getReservation() != null && ins.getVaccinationCoverage() == null) {
+                    Vaccination vc = new Vaccination(ins, timeslotCode, endDate);
                     ins.setVaccinationCoverage(vc);
                     reservationService.deleteReservation(ins.getReservation());
                     ins.setReservation(null);
                     return vc;
-                }else if(ins.getVaccinationCoverage()!=null){
-                    throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Insured with AMKA: " +insuredAmka+ " has already been vaccinated");
-                }else{
-                    throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Insured with AMKA: " +insuredAmka+ " doesn't have a reservation");
+                } else if (ins.getVaccinationCoverage() != null) {
+                    throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Insured with AMKA: " + insuredAmka + " has already been vaccinated");
+                } else {
+                    throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Insured with AMKA: " + insuredAmka + " doesn't have a reservation");
                 }
             }
 
         }
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Insured with AMKA: " +insuredAmka+ " doesn't exist");
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Insured with AMKA: " + insuredAmka + " doesn't exist");
     }
 }
