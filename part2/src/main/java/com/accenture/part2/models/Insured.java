@@ -1,6 +1,5 @@
 package com.accenture.part2.models;
 
-import com.accenture.part2.DTOs.VaccinationDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class Insured {
@@ -11,7 +10,8 @@ public class Insured {
     private String surname;
     private String email;
     private int timesReservationChanged;
-    private VaccinationDTO vaccinationCoverage;
+    @JsonIgnore
+    private Vaccination vaccinationCoverage;
     @JsonIgnore
     private Reservation reservation;
     @JsonIgnore
@@ -28,11 +28,11 @@ public class Insured {
         vaccinationCoverage=null;
     }
 
-    public VaccinationDTO getVaccinationCoverage() {
+    public Vaccination getVaccinationCoverage() {
         return vaccinationCoverage;
     }
 
-    public void setVaccinationCoverage(VaccinationDTO vaccinationCoverage) {
+    public void setVaccinationCoverage(Vaccination vaccinationCoverage) {
         this.vaccinationCoverage = vaccinationCoverage;
     }
 

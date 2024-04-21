@@ -1,16 +1,24 @@
 package com.accenture.part2.models;
 
 public class Timeslot {
+    private String code;
     private String date;
     private Integer endTime;
     private boolean isAvailable;
-    private String code;
 
-    public Timeslot(String date, Integer endTime,String code) {
+    public Timeslot(String code,String date, Integer endTime) {
+        this.code=code;
         this.date = date;
         this.endTime = endTime;
-        this.code = code;
         isAvailable=true;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getDate() {
@@ -28,14 +36,6 @@ public class Timeslot {
 
     public void setEndTime(Integer endTime) {
         this.endTime = endTime;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
     }
 
     public boolean isAvailable() {

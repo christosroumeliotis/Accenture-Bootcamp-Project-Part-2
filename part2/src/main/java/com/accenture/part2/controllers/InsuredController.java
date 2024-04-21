@@ -1,6 +1,5 @@
 package com.accenture.part2.controllers;
 
-import com.accenture.part2.DTOs.VaccinationDTO;
 import com.accenture.part2.models.*;
 import com.accenture.part2.services.InsuredService;
 import com.accenture.part2.services.ReservationService;
@@ -55,7 +54,7 @@ public class InsuredController {
     }
     @GetMapping("/vaccinationCoverage")
 //    @ResponseBody
-    public VaccinationDTO getInfoOfInsured(@RequestParam String insuredAmka){
+    public Vaccination getInfoOfInsured(@RequestParam String insuredAmka){
 
         // VaccinationDTO vaccination = new VaccinationDTO(String amka);
         for(Insured insured: insuredService.returnAllInsureds()) {
