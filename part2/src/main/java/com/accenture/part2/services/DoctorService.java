@@ -1,8 +1,8 @@
 package com.accenture.part2.services;
 
-import com.accenture.part2.DTOs.VaccinationDTO;
 import com.accenture.part2.models.Doctor;
 import com.accenture.part2.models.Insured;
+import com.accenture.part2.models.Vaccination;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -15,12 +15,11 @@ import java.util.List;
 public class DoctorService {
 
     @Autowired
-            InsuredService insuredService;
+    InsuredService insuredService;
     @Autowired
-            ReservationService reservationService;
+    ReservationService reservationService;
 
     List<Doctor> doctors = new ArrayList<>();
-    List<VaccinationDTO> vaccinations = new ArrayList<>();
     public List<Doctor> getAllDoctors() {
         return doctors;
     }
@@ -39,58 +38,23 @@ public class DoctorService {
         throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Doctor with AMKA: "+ doctor.getAmka()+" not found");
     }
 
-    public VaccinationDTO getVaccinationByAmka(String amka) {
-        for (VaccinationDTO vaccination : vaccinations) {
-            if (vaccination.getAmka().equals(amka)) {
-                return vaccination;
+    public Vaccination addVaccination(String timeslotCode, String insuredAmka, String endDate) {
+        for(Insured ins:insuredService.returnAllInsureds()){
+            if(ins.getAmka().equals(insuredAmka)){
+                if(ins.getReservation()!=null && ins.getVaccinationCoverage()==null){
+                    Vaccination vc=new Vaccination(ins,timeslotCode,endDate);
+                    ins.setVaccinationCoverage(vc);
+                    reservationService.deleteReservation(ins.getReservation());
+                    ins.setReservation(null);
+                    return vc;
+                }else if(ins.getVaccinationCoverage()!=null){
+                    throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Insured with AMKA: " +insuredAmka+ " has already been vaccinated");
+                }else{
+                    throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Insured with AMKA: " +insuredAmka+ " doesn't have a reservation");
+                }
             }
-        }
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Αυτό το ΑΜΚΑ δεν υπάρχει.");
-    }
 
-    public List<VaccinationDTO> addVaccination(VaccinationDTO vaccinationDTO){
-        for (VaccinationDTO vaccination : vaccinations) {
-            if (vaccination.getAmka().equals(vaccinationDTO.getAmka())) {
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Αυτό το ΑΜΚΑ υπάρχει ήδη.");
-            }
         }
-        vaccinations.add(vaccinationDTO);
-        for(Insured ins : insuredService.returnAllInsureds()) {
-            if(ins.getAmka().equals(vaccinationDTO.getAmka())){
-                reservationService.deleteReservation(ins.getReservation());
-                ins.setVaccinationCoverage(vaccinationDTO);
-            }
-        }
-
-        return vaccinations;
-    }
-
-    public List<VaccinationDTO> getVaccinations(){
-        if(vaccinations.isEmpty())
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Δεν υπάρχουν καταχωρήσεις.");
-        return vaccinations;
-    }
-
-    public VaccinationDTO updateVaccination(String amka, String vaccinationDate, String vaccinationTime, String expirationDate,String code) {
-        for (VaccinationDTO vaccination : vaccinations) {
-            if (vaccination.getAmka().equals(amka)) {
-                vaccination.setVaccinationDate(vaccinationDate);
-                vaccination.setVaccinationTime(vaccinationTime);
-                vaccination.setExpirationDate(expirationDate);
-                vaccination.setCode(code);
-                return vaccination;
-            }
-        }
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Αυτό το ΑΜΚΑ δεν υπάρχει.");
-    }
-
-    public List<VaccinationDTO> deleteVaccination(String amka) {
-        for(VaccinationDTO vaccination : vaccinations) {
-            if (vaccination.getAmka().equals(amka)) {
-                vaccinations.remove(vaccination);
-                return vaccinations;
-            }
-        }
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Αυτό το ΑΜΚΑ δεν υπάρχει.");
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Insured with AMKA: " +insuredAmka+ " doesn't exist");
     }
 }
