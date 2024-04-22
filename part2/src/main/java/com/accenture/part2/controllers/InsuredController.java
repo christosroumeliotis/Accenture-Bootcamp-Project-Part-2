@@ -1,25 +1,23 @@
 package com.accenture.part2.controllers;
 
-import com.accenture.part2.models.*;
+import com.accenture.part2.models.Insured;
+import com.accenture.part2.models.Reservation;
+import com.accenture.part2.models.Timeslot;
 import com.accenture.part2.services.InsuredService;
 import com.accenture.part2.services.ReservationService;
 import com.accenture.part2.services.TimeslotService;
-import com.google.zxing.WriterException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Base64;
 import java.util.List;
-import java.util.Objects;
 
 @RestController
 @RequestMapping("/insured")
@@ -113,6 +111,7 @@ public class InsuredController {
             return new ResponseEntity<>("Not found", HttpStatus.NOT_FOUND);
         }*/
     }
+
     @GetMapping("/vaccinationCoverage/qrcode")
     public ResponseEntity<?> getInfoOfInsured(@RequestParam String insuredAmka) {
         String image = insuredService.getInfoOfInsured(insuredAmka);

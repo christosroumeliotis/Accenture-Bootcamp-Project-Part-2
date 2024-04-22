@@ -31,14 +31,14 @@ public class Config {
             doctorService.addDoctor(doctor1);
             doctorService.addDoctor(doctor2);
 
-            timeslotService.addTimeslot(new Timeslot("dc1", "24/4/2023 10:30", 40));
-            timeslotService.addTimeslot(new Timeslot("dc2", "29/4/2023 10:30", 40));
-            timeslotService.addTimeslot(new Timeslot("dc3", "22/4/2023 10:30", 40));
-            timeslotService.addTimeslot(new Timeslot("dc4", "20/5/2023 10:30", 40));
-            Timeslot timeslot1 = new Timeslot("cd1", "20/4/2023 10:30", 40);
-            Timeslot timeslot2 = new Timeslot("cd2", "28/4/2024 13:30", 40);
-            Timeslot timeslot3 = new Timeslot("cd3", "28/4/2024 10:30", 40);
-            Timeslot timeslot4 = new Timeslot("cd4", "2/12/2024 20:30", 40);
+            timeslotService.addTimeslot(new Timeslot("dc1", "24/4/2023 10:30"));
+            timeslotService.addTimeslot(new Timeslot("dc2", "29/4/2023 10:30"));
+            timeslotService.addTimeslot(new Timeslot("dc3", "22/4/2023 10:30"));
+            timeslotService.addTimeslot(new Timeslot("dc4", "20/5/2023 10:30"));
+            Timeslot timeslot1 = new Timeslot("cd1", "20/4/2023 10:30");
+            Timeslot timeslot2 = new Timeslot("cd2", "28/4/2024 13:30");
+            Timeslot timeslot3 = new Timeslot("cd3", "28/4/2024 10:30");
+            Timeslot timeslot4 = new Timeslot("cd4", "2/12/2024 20:30");
             timeslotService.addTimeslot(timeslot1);
             timeslotService.addTimeslot(timeslot2);
             timeslotService.addTimeslot(timeslot3);
