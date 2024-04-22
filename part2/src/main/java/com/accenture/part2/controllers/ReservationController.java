@@ -21,22 +21,22 @@ public class ReservationController {
         return reservationService.getReservations();
     }
 
-    @GetMapping("/upcoming") // http://localhost:8080/reservation/upcoming
+    @GetMapping("/upcoming") // http://localhost:8081/reservation/upcoming
     public List<Reservation> getUpcomingReservations() {
         return reservationService.getUpcomingReservations();
     }
 
-    @GetMapping("/date") // http://localhost:8080/reservation/date?date=2/12/2024
+    @GetMapping("/date") // http://localhost:8081/reservation/date?date=2/12/2024
     public List<Reservation> getReservationsByDate(@RequestParam String date) {
         return reservationService.getReservationsByDate(date);
     }
 
-    @GetMapping("/{page}") //http://localhost:8080/reservations/2
+    @GetMapping("/{page}") //http://localhost:8081/reservations/2
     public List<Reservation> getReservationsByPage(@PathVariable int page) {
         return reservationService.getAllReservations(page);
     }
 
-    @GetMapping("/doctor/pdf") // http://localhost:8080/reservation/doctor/pdf?doctorAmka=amka1&date=28/4/2024
+    @GetMapping("/doctor/pdf") // http://localhost:8081/reservation/doctor/pdf?doctorAmka=amka1&date=28/4/2024
     public void createPdf(@RequestParam String doctorAmka,
                           @RequestParam("date") String date, HttpServletResponse response) throws IOException {
         response.setContentType("application/pdf");

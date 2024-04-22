@@ -1,5 +1,6 @@
 package com.accenture.part2.services;
 
+import com.accenture.part2.Constants;
 import com.accenture.part2.models.Insured;
 import com.accenture.part2.models.Reservation;
 import com.accenture.part2.models.Timeslot;
@@ -47,7 +48,7 @@ public class ReservationService {
             }
         }
         if (upcomingReservations.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No upcoming reservations ");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, Constants.N0_RESERVATIONS_FOUND);
         }
         return upcomingReservations;
 
@@ -72,7 +73,7 @@ public class ReservationService {
         int totalPages = (int) Math.ceil((double) reservations.size() / pageSize);
 
         if (page < 1 || page > totalPages) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No more reservations found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, Constants.N0_RESERVATIONS_FOUND);
         }
 
         int startIndex = (page - 1) * pageSize;
@@ -84,7 +85,7 @@ public class ReservationService {
 
     public void exportAllReservationsToPdf(HttpServletResponse response, String doctorAmka, String date) throws IOException {
         if (!doctorAmkaExists(doctorAmka)) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Doctor's Amka not exists");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, Constants.DOCTOR_AMKA_NOT_FOUND);
         }
 
         Document document = new Document(PageSize.A4);
