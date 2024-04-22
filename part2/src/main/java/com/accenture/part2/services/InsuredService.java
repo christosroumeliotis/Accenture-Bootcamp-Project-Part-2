@@ -130,6 +130,8 @@ public class InsuredService {
                     try {
                         // Generate and Save Qr Code Image in static/image folder
                         QRCodeGenerator.generateQRCodeImage("/vaccinationcoverage/" + insuredAmka + "/qrcode", 250, 250, path);
+                        // EDO MPORO NA BALO SAN TEXT TO "This insured with AMKA: " +insuredAmka+" has been already vaccinated with expiration date: " +
+                        //                            insured.getVaccinationCoverage().getExpirationDate()
 
                     } catch (WriterException | IOException e) {
                         e.printStackTrace();
