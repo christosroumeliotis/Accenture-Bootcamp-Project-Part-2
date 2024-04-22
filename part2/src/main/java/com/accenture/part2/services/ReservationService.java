@@ -19,6 +19,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.accenture.part2.Constants.*;
+
 @Service
 public class ReservationService {
 
@@ -63,7 +65,7 @@ public class ReservationService {
             }
         }
         if (reservationsByDate.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No reservations found for date: " + date);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, NO_RESERVASIONS_FOR_DATE + ": " + date);
         }
         return reservationsByDate;
     }

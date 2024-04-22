@@ -8,6 +8,9 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.accenture.part2.Constants.FOUND_TIMESLOT_BUT_NOT_AVAILABLE;
+import static com.accenture.part2.Constants.NOT_FIND_TIMESLOT;
+
 @Service
 public class TimeslotService {
 
@@ -29,11 +32,11 @@ public class TimeslotService {
                 if (t.isAvailable() == true) {
                     return t;
                 } else {
-                    throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Found timeslot at: " + timeslot.getDate() + " but its not available");
+                    throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format(FOUND_TIMESLOT_BUT_NOT_AVAILABLE, timeslot.getDate()));
                 }
             }
         }
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Couldn't find timeslot at: " + timeslot.getDate());
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, NOT_FIND_TIMESLOT + ":" + timeslot.getDate());
 
     }
 
@@ -44,11 +47,11 @@ public class TimeslotService {
                 if (t.isAvailable() == true) {
                     return t;
                 } else {
-                    throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Found timeslot at: " + date + " but its not available");
+                    throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format(FOUND_TIMESLOT_BUT_NOT_AVAILABLE, date));
                 }
             }
         }
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Couldn't find timeslot at: " + date);//NA ROTHSW POS THA EMTHANIZETAI TO MESSAGE
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, NOT_FIND_TIMESLOT + ":" + date);//NA ROTHSW POS THA EMTHANIZETAI TO MESSAGE
     }
 
     public List<Timeslot> getAvailableTimeslotByMonth(int month) {
