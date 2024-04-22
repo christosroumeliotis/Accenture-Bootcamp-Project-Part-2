@@ -53,47 +53,8 @@ public class InsuredController {
         return insuredService.unselectReservation(insuredAmka);
     }
 
-//    @GetMapping("/vaccinationCoverage")
-////    @ResponseBody
-//    public Vaccination getInfoOfInsured(@RequestParam String insuredAmka) {
-//
-//        // VaccinationDTO vaccination = new VaccinationDTO(String amka);
-//        for (Insured insured : insuredService.returnAllInsureds()) {
-//            //for (Vaccination vacc : vaccinationService.getInfoOfVacc()) {
-//            // VaccinationDTO vaccination = null;
-//            if (Objects.equals(insured.getAmka(), insuredAmka)) //&& vacc.getInsured().getAmka() == insured.getAmka())
-//                if (insured.getVaccinationCoverage() != null) {
-//
-//                    byte[] image = new byte[0];
-//                    try {
-//
-//                        // Generate and Return Qr Code in Byte Array
-//                        image = QRCodeGenerator.getQRCodeImage("/vaccinationcoverage/" + insuredAmka + "/qrcode", 250, 250);
-//
-//                        // Generate and Save Qr Code Image in static/image folder
-//                        QRCodeGenerator.generateQRCodeImage("/vaccinationcoverage/" + insuredAmka + "/qrcode", 250, 250, QR_CODE_IMAGE_PATH);
-//
-//                    } catch (WriterException | IOException e) {
-//                        e.printStackTrace();
-//                    }
-//                    // Convert Byte Array into Base64 Encode String
-//                    String qrcode = Base64.getEncoder().encodeToString(image);
-//
-//
-//                    return insured.getVaccinationCoverage();
-////                        return ((new InsuredDTO(insured.getAmka(), insured.getVaccinationCoverage())) (vacc.getExpirationDate()));
-////                        return s;
-//                } else
-//                    throw new ResponseStatusException(HttpStatus.NOT_FOUND, "This insured with AMKA: " + insuredAmka + ", hasn't vaccinated yet!");
-//
-//        }
-//        //}
-//
-//        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error! This insured with AMKA: " + insuredAmka + ", doesn't exists!");
-//
-//    }
+
     @GetMapping("/vaccinationCoverage")
-//    @ResponseBody
     public Vaccination getInfoOfInsured(@RequestParam String insuredAmka) {
         return insuredService.getInfoOfInsured(insuredAmka);
     }

@@ -101,7 +101,6 @@ public class InsuredService {
             throw new ResponseStatusException(HttpStatus.TOO_MANY_REQUESTS, "Insured with with AMKA: " + insuredAmka + " cant change reservation over 2 times");
 
         }
-
     }
 
 

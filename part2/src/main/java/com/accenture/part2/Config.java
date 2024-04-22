@@ -13,8 +13,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class Config {
-    //gia na kanoume arxikopoihsh thn listas addresses
-    @Bean//xrisimopoieitai mesa se config kai services //na trexei san apomonomeno apo ta ipoloipa
+    @Bean
     public CommandLineRunner commandLineRunner(InsuredService insuredService, DoctorService doctorService, TimeslotService timeslotService, ReservationService reservationService) {
         return args -> {
             Doctor doctor1 = new Doctor("amka1", "leo", "pavlou");
