@@ -93,6 +93,7 @@ public class InsuredService {
         }
         if (insured.getTimesReservationChanged() < 2) {
             reservationService.deleteReservation(insured.getReservation());
+            insured.getReservation().getTimeslot().setAvailable(true);
             insured.setReservation(null);
             insured.increaseTimesReservationChanged();
             return "Reservation unselected";
