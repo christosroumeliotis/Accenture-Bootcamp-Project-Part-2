@@ -85,25 +85,30 @@ public class ReservationService {
     }
 
 
-    public void exportAllReservationsToPdf(HttpServletResponse response, String doctorAmka, String date) throws IOException {
+    public void exportAllReservationsToPdf(HttpServletResponse response, String doctorAmka, String date) {
         if (!doctorAmkaExists(doctorAmka)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, Constants.DOCTOR_AMKA_NOT_FOUND);
         }
+        try {
+            List<Reservation> doctorReservationsByDate = getDoctorReservations(doctorAmka, date);
 
-        Document document = new Document(PageSize.A4);
-        PdfWriter.getInstance(document, response.getOutputStream());
+            Document document = new Document(PageSize.A4);
+            PdfWriter.getInstance(document, response.getOutputStream());
+            document.open();
 
-        List<Reservation> doctorReservationsByDate = getDoctorReservations(doctorAmka, date);
-        document.open();
-        document.add(new Paragraph("Doctor Amka: " + doctorAmka));
-        document.add(new Paragraph("Number of Reservations: " + doctorReservationsByDate.size()));
-        if (!doctorReservationsByDate.isEmpty()) {
-            document.add(new Paragraph("------------ Timeslots ------------"));
-            for (int i = 0; i < doctorReservationsByDate.size(); i++) {
-                document.add(new Paragraph((i + 1) + ") " + doctorReservationsByDate.get(i).getTimeslot().toPdfFormat()));
+            document.add(new Paragraph(DOCTOR_AMKA + ": " + doctorAmka));
+            document.add(new Paragraph(NUMBER_OF_RESERVATIONS + ": " + doctorReservationsByDate.size()));
+            if (!doctorReservationsByDate.isEmpty()) {
+                document.add(new Paragraph(TIMESLOTS_HEADER));
+                for (int i = 0; i < doctorReservationsByDate.size(); i++) {
+                    document.add(new Paragraph((i + 1) + ") " + doctorReservationsByDate.get(i).getTimeslot().toPdfFormat()));
+                }
             }
+
+            document.close();
+        } catch (IOException exc) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, PDF_ERROR);
         }
-        document.close();
     }
 
     private boolean doctorAmkaExists(String amka) {
