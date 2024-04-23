@@ -1,6 +1,7 @@
 package com.accenture.part2.services;
 
 import com.accenture.part2.Constants;
+import com.accenture.part2.models.Doctor;
 import com.accenture.part2.models.Insured;
 import com.accenture.part2.models.Reservation;
 import com.accenture.part2.models.Timeslot;
@@ -9,6 +10,7 @@ import com.lowagie.text.PageSize;
 import com.lowagie.text.Paragraph;
 import com.lowagie.text.pdf.PdfWriter;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -25,6 +27,8 @@ import static com.accenture.part2.Constants.*;
 public class ReservationService {
 
 
+    @Autowired
+    DoctorService doctorService;
     List<Reservation> reservations = new ArrayList<>();
 
     public Reservation addReservation(Insured insured, Timeslot timeslot) {
@@ -112,8 +116,8 @@ public class ReservationService {
     }
 
     private boolean doctorAmkaExists(String amka) {
-        for (Reservation reservation : reservations) {
-            if (reservation.getInsured().getDoctor().getAmka().equals(amka)) {
+        for (Doctor doctor : doctorService.doctors) {
+            if (doctor.getAmka().equals(amka)) {
                 return true;
             }
         }

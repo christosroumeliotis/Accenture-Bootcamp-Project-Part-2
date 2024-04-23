@@ -19,10 +19,6 @@ public class TimeslotController {
         return timeslotService.getAllTimeslots();
     }
 
-    /*@GetMapping("/available/date")
-    public Timeslot getAvailableTimeslotByDate(@RequestParam String date){
-           return timeslotService.getAvailableTimeslotByDate(date);
-    }*/
 
     @PostMapping()
     public List<Timeslot> addTimeslot(@RequestBody Timeslot timeslot) {

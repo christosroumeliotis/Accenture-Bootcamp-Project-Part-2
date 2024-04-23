@@ -42,9 +42,4 @@ public class ReservationController {
         reservationService.exportAllReservationsToPdf(response, doctorAmka, date);
     }
 
-    /*@PostMapping()
-    public Reservation addReservation (@RequestBody Insured insured,
-                                             @RequestBody Timeslot timeslot){
-        return reservationService.addReservation(insured,timeslot);
-    }*/
 }

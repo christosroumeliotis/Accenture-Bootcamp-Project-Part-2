@@ -35,7 +35,7 @@ public class Config {
             timeslotService.addTimeslot(new Timeslot("dc2", "29/4/2024 10:30"));
             timeslotService.addTimeslot(new Timeslot("dc3", "22/5/2024 10:30"));
             timeslotService.addTimeslot(new Timeslot("dc4", "20/5/2024 10:30"));
-            Timeslot timeslot1 = new Timeslot("cd1", "29/4/2023 11:30");
+            Timeslot timeslot1 = new Timeslot("cd1", "29/4/2024 11:30");
             Timeslot timeslot2 = new Timeslot("cd2", "28/4/2024 13:30");
             Timeslot timeslot3 = new Timeslot("cd3", "28/4/2024 10:30");
             Timeslot timeslot4 = new Timeslot("cd4", "2/5/2024 20:30");
