@@ -23,9 +23,7 @@ public class InsuredService {
     DoctorService doctorService;
     @Autowired
     ReservationService reservationService;
-
     List<Insured> insureds = new ArrayList<>();
-
 
     public List<Insured> addInsured(Insured insured) {
         insureds.add(insured);
@@ -104,7 +102,7 @@ public class InsuredService {
     public String getInfoOfInsured2(String insuredAmka) {
 
         for (Insured insured : insureds) {
-            if (Objects.equals(insured.getAmka(), insuredAmka))
+            if (insured.getAmka().equals(insuredAmka))
                 if (insured.getVaccinationCoverage() != null) {
                     return (String.format(INSURED_ALREADY_VACCINATED, insuredAmka, insured.getVaccinationCoverage().getExpirationDate()));
                 } else
@@ -113,10 +111,9 @@ public class InsuredService {
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format(INSURED_WITH_AMKA_NOT_FOUND, insuredAmka));
     }
 
-
     public String getInfoOfInsured(String insuredAmka) {
 
-        String path = "./QRCodeWithAMKA" + insuredAmka + ".png";
+        String path = String.format(QR_CODE_PATH, insuredAmka);
 
         for (Insured insured : insureds) {
             if (Objects.equals(insured.getAmka(), insuredAmka))
@@ -125,18 +122,14 @@ public class InsuredService {
                         // Generate and Save Qr Code Image in static/image folder
                         QRCodeGenerator.generateQRCodeImage(String.format(INSURED_ALREADY_VACCINATED, insuredAmka,
                                 insured.getVaccinationCoverage().getExpirationDate()), 250, 250, path);
-
                     } catch (WriterException | IOException e) {
                         e.printStackTrace();
                     }
-
                     return path;
                 } else
                     throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format(INSURED_NOT_VACCINATED_YET, insuredAmka));
         }
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format(INSURED_WITH_AMKA_NOT_FOUND, insuredAmka));
-
     }
-
 
 }
