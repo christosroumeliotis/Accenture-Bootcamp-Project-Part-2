@@ -15,6 +15,11 @@ public class DoctorController {
     @Autowired
     DoctorService doctorService;
 
+    @GetMapping
+    public List<Doctor> getAllDoctors() {
+        return doctorService.getAllDoctors();
+    }
+
     @PostMapping
     public List<Doctor> addDoctor(@RequestBody Doctor doctor) {
         return doctorService.addDoctor(doctor);
