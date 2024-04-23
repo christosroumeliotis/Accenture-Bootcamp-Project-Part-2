@@ -11,6 +11,8 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.accenture.part2.Constants.*;
+
 @Service
 public class DoctorService {
 
@@ -36,7 +38,7 @@ public class DoctorService {
                 return d;
             }
         }
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Doctor with AMKA: " + doctor.getAmka() + " not found");
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format(DOCTOR_WITH_AMKA_NOT_FOUND, doctor.getAmka()));
     }
 
     public Vaccination addVaccination(String timeslotCode, String insuredAmka, String endDate) {
@@ -49,13 +51,13 @@ public class DoctorService {
                     ins.setReservation(null);
                     return vc;
                 } else if (ins.getVaccinationCoverage() != null) {
-                    throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Insured with AMKA: " + insuredAmka + " has already been vaccinated");
+                    throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format(INSURED_IS_VACCINATED, insuredAmka));
                 } else {
-                    throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Insured with AMKA: " + insuredAmka + " doesn't have a reservation");
+                    throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format(INSURED_HAS_NOT_RESERVATION2, insuredAmka));
                 }
             }
 
         }
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Insured with AMKA: " + insuredAmka + " doesn't exist");
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format(INSURED_WITH_AMKA_NOT_FOUND, insuredAmka));
     }
 }

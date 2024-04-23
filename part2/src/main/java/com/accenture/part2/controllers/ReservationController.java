@@ -6,7 +6,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -38,7 +37,7 @@ public class ReservationController {
 
     @GetMapping("/doctor/pdf") // http://localhost:8081/reservation/doctor/pdf?doctorAmka=amka1&date=28/4/2024
     public void createPdf(@RequestParam String doctorAmka,
-                          @RequestParam("date") String date, HttpServletResponse response) throws IOException {
+                          @RequestParam("date") String date, HttpServletResponse response) {
         response.setContentType("application/pdf");
         reservationService.exportAllReservationsToPdf(response, doctorAmka, date);
     }

@@ -1,30 +1,27 @@
 package com.accenture.part2.controllers;
 
-import com.accenture.part2.models.*;
+import com.accenture.part2.models.Insured;
+import com.accenture.part2.models.Reservation;
+import com.accenture.part2.models.Timeslot;
 import com.accenture.part2.services.InsuredService;
 import com.accenture.part2.services.ReservationService;
 import com.accenture.part2.services.TimeslotService;
-import com.google.zxing.WriterException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Base64;
 import java.util.List;
-import java.util.Objects;
 
 @RestController
 @RequestMapping("/insured")
 public class InsuredController {
-    private static final String QR_CODE_IMAGE_PATH = "./src/main/resources/static/img/QRCode.png";
     @Autowired
     TimeslotService timeslotService;
     @Autowired
@@ -98,10 +95,26 @@ public class InsuredController {
 //        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error! This insured with AMKA: " + insuredAmka + ", doesn't exists!");
 //
 //    }
+
     @GetMapping("/vaccinationCoverage")
-//    @ResponseBody
+    public String getInfoOfInsured2(@RequestParam String insuredAmka) {
+        return insuredService.getInfoOfInsured2(insuredAmka);
+/*
+        File file = new File(image);
+
+        try {
+            return ResponseEntity.status(HttpStatus.OK)
+                    .contentType(MediaType.valueOf(Files.probeContentType(Paths.get(file.getAbsolutePath()))))
+                    .body(new UrlResource(file.toURI()));
+        } catch (IOException e) {
+            e.printStackTrace();
+            return new ResponseEntity<>("Not found", HttpStatus.NOT_FOUND);
+        }*/
+    }
+
+    @GetMapping("/vaccinationCoverage/qrcode")
     public ResponseEntity<?> getInfoOfInsured(@RequestParam String insuredAmka) {
-        String image= insuredService.getInfoOfInsured(insuredAmka);
+        String image = insuredService.getInfoOfInsured(insuredAmka);
 
         File file = new File(image);
 
@@ -114,4 +127,23 @@ public class InsuredController {
             return new ResponseEntity<>("Not found", HttpStatus.NOT_FOUND);
         }
     }
+
+    @GetMapping("/vaccinationCoverage/qrcode/testing")
+    public ResponseEntity<?> getInfoOfInsured3(@RequestParam String insuredAmka) {
+        String image = insuredService.getInfoOfInsured(insuredAmka);
+        String expDay = insuredService.getInfoOfInsured3(insuredAmka)[1];
+
+        File file = new File(image);
+
+        try {
+            return ResponseEntity.status(HttpStatus.OK)
+                    .contentType(MediaType.valueOf(Files.probeContentType(Paths.get(file.getAbsolutePath()))))
+                    .body(new UrlResource(file.toURI()));
+        } catch (IOException e) {
+            e.printStackTrace();
+            return new ResponseEntity<>("Not found", HttpStatus.NOT_FOUND);
+        }
+    }
+
+
 }
