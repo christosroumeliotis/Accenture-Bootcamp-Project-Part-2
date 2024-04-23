@@ -19,6 +19,10 @@ public class TimeslotController {
         return timeslotService.getAllTimeslots();
     }
 
+    @GetMapping("/timeslot")
+    public Timeslot getTimeslot(@RequestBody Timeslot timeslot) {
+        return timeslotService.getTimeslot(timeslot);
+    }
 
     @PostMapping()
     public List<Timeslot> addTimeslot(@RequestBody Timeslot timeslot) {
