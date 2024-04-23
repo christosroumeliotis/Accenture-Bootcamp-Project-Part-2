@@ -16,7 +16,6 @@ import static com.accenture.part2.Constants.*;
 
 @Service
 public class InsuredService {
-    private static final String QR_CODE_IMAGE_PATH = "./src/main/resources/static/img/QRCode.png";
 
     @Autowired
     TimeslotService timeslotService;
@@ -117,23 +116,21 @@ public class InsuredService {
 
     public String getInfoOfInsured(String insuredAmka) {
 
-        String path = "./QRCodeWithAMKA" + insuredAmka + ".png"; //AYTO TO ALLAZOYME STO SOSTO PATH, DLD AN DEN LEITOYRGHSEI THA BALO SKETO "./QRCode.png"
+        String path = "./QRCodeWithAMKA" + insuredAmka + ".png";
 
         for (Insured insured : insureds) {
             if (Objects.equals(insured.getAmka(), insuredAmka))
                 if (insured.getVaccinationCoverage() != null) {
                     try {
                         // Generate and Save Qr Code Image in static/image folder
-                        QRCodeGenerator.generateQRCodeImage(String.format(INSURED_ALREADY_VACCINATED, insuredAmka, insured.getVaccinationCoverage().getExpirationDate()), 250, 250, path);
-                        // EDO MPORO NA BALO SAN TEXT TO "http://localhost:8081/insured/vaccinationCoverage?insuredAmka="+insuredAmka
-                        // http://localhost:8081/insured/vaccinationCoverage/qrcode/testing?insuredAmka=amka1
-                        // "/vaccinationcoverage/" + insuredAmka + "/qrcode"
+                        QRCodeGenerator.generateQRCodeImage(String.format(INSURED_ALREADY_VACCINATED, insuredAmka,
+                                insured.getVaccinationCoverage().getExpirationDate()), 250, 250, path);
 
                     } catch (WriterException | IOException e) {
                         e.printStackTrace();
                     }
 
-                    return path; //kano return to string path
+                    return path;
                 } else
                     throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format(INSURED_NOT_VACCINATED_YET, insuredAmka));
         }
@@ -141,31 +138,5 @@ public class InsuredService {
 
     }
 
-    public String[] getInfoOfInsured3(String insuredAmka) {
-        String arr[] = new String[2];
-
-        String path = "./QRCode.png"; //AYTO TO ALLAZOYME STO SOSTO PATH, DLD AN DEN LEITOYRGHSEI THA BALO SKETO "./QRCode.png"
-
-        for (Insured insured : insureds) {
-            if (Objects.equals(insured.getAmka(), insuredAmka))
-                if (insured.getVaccinationCoverage() != null) {
-                    try {
-                        // Generate and Save Qr Code Image in static/image folder
-                        QRCodeGenerator.generateQRCodeImage(String.format(INSURED_ALREADY_VACCINATED, insuredAmka, insured.getVaccinationCoverage().getExpirationDate()), 250, 250, path);
-
-                    } catch (WriterException | IOException e) {
-                        e.printStackTrace();
-                    }
-
-                    arr[0] = path;
-                    arr[1] = String.format(INSURED_ALREADY_VACCINATED, insuredAmka, insured.getVaccinationCoverage().getExpirationDate());
-
-                    return arr;
-
-                } else
-                    throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format(INSURED_NOT_VACCINATED_YET, insuredAmka));
-        }
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format(INSURED_WITH_AMKA_NOT_FOUND, insuredAmka));
-    }
 
 }
