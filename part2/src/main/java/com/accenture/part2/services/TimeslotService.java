@@ -13,9 +13,7 @@ import static com.accenture.part2.Constants.NOT_FIND_TIMESLOT;
 
 @Service
 public class TimeslotService {
-
     List<Timeslot> timeslots = new ArrayList<>();
-
 
     public List<Timeslot> getAllTimeslots() {
         return timeslots;
@@ -29,7 +27,7 @@ public class TimeslotService {
     public Timeslot getTimeslot(Timeslot timeslot) {
         for (Timeslot t : timeslots) {
             if (t.getDate().equals(timeslot.getDate())) {
-                if (t.isAvailable() == true) {
+                if (t.isAvailable()) {
                     return t;
                 } else {
                     throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format(FOUND_TIMESLOT_BUT_NOT_AVAILABLE, timeslot.getDate()));
@@ -37,21 +35,20 @@ public class TimeslotService {
             }
         }
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, NOT_FIND_TIMESLOT + ":" + timeslot.getDate());
-
     }
 
     public Timeslot getAvailableTimeslotByDate(String date) {
         for (Timeslot t : timeslots) {
             String s = t.getDate();
             if (s.equals(date)) {
-                if (t.isAvailable() == true) {
+                if (t.isAvailable()) {
                     return t;
                 } else {
                     throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format(FOUND_TIMESLOT_BUT_NOT_AVAILABLE, date));
                 }
             }
         }
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND, NOT_FIND_TIMESLOT + ":" + date);//NA ROTHSW POS THA EMTHANIZETAI TO MESSAGE
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, NOT_FIND_TIMESLOT + ":" + date);
     }
 
     public List<Timeslot> getAvailableTimeslotByMonth(int month) {

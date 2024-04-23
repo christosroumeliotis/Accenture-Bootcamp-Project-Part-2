@@ -22,6 +22,8 @@ public class Constants {
     public static final String FOUND_TIMESLOT_BUT_NOT_AVAILABLE = "Found timeslot at: %s but its not available";
     public static final String INSURED_ALREADY_VACCINATED = "This insured with AMKA: %s  has already been vaccinated with expiration date: %s";
     public static final String PDF_ERROR = "Error exporting PDF document";
+    public static final String NOT_FOUND = "Not found";
+    public static final String QR_CODE_PATH = "./QRCodeWithAMKA %s .png";
 
 }
 

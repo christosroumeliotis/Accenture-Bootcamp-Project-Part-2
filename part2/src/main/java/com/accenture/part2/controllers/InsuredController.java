@@ -19,6 +19,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 
+import static com.accenture.part2.Constants.NOT_FOUND;
+
 @RestController
 @RequestMapping("/insured")
 public class InsuredController {
@@ -73,7 +75,7 @@ public class InsuredController {
                     .body(new UrlResource(file.toURI()));
         } catch (IOException e) {
             e.printStackTrace();
-            return new ResponseEntity<>("Not found", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(NOT_FOUND, HttpStatus.NOT_FOUND);
         }
     }
 
