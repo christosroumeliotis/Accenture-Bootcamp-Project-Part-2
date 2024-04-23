@@ -47,7 +47,7 @@ public class Config {
 
             insuredService.makeAReservation("amka1", "28/4/2024 13:30", "amka1");
             insuredService.makeAReservation("amka2", "28/4/2024 10:30", "amka1");
-            insuredService.makeAReservation("amka3", "20/5/2023 10:30", "amka2");
+            insuredService.makeAReservation("amka3", "20/5/2024 10:30", "amka2");
 
         };
     }
