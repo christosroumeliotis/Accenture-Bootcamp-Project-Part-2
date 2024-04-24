@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static com.accenture.part2.Constants.DEFAULT_PAGE_SIZE;
+
 @RestController
 @RequestMapping("/reservation")
 public class ReservationController {
@@ -30,9 +32,9 @@ public class ReservationController {
         return reservationService.getReservationsByDate(date);
     }
 
-    @GetMapping("/{page}") //http://localhost:8081/reservations/2
-    public List<Reservation> getReservationsByPage(@PathVariable int page) {
-        return reservationService.getAllReservations(page);
+    @GetMapping("/page/{page}") //http://localhost:8081/reservation/page/2?pageSize=3
+    public List<Reservation> getReservationsByPage(@PathVariable int page, @RequestParam(defaultValue = DEFAULT_PAGE_SIZE) int pageSize) {
+        return reservationService.getAllReservations(page, pageSize);
     }
 
     @GetMapping("/doctor/pdf") // http://localhost:8081/reservation/doctor/pdf?doctorAmka=amka1&date=28/4/2024

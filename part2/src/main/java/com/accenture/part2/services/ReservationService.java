@@ -74,8 +74,7 @@ public class ReservationService {
         return reservationsByDate;
     }
 
-    public List<Reservation> getAllReservations(int page) {
-        int pageSize = 3;
+    public List<Reservation> getAllReservations(int page, int pageSize) {
         int totalPages = (int) Math.ceil((double) reservations.size() / pageSize);
 
         if (page < 1 || page > totalPages) {

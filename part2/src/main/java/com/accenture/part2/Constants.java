@@ -24,7 +24,7 @@ public class Constants {
     public static final String PDF_ERROR = "Error exporting PDF document";
     public static final String NOT_FOUND = "Not found";
     public static final String QR_CODE_PATH = "./QRCodeWithAMKA %s .png";
-
+    public static final String DEFAULT_PAGE_SIZE = "2";
 }
 
 
