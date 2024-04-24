@@ -53,7 +53,7 @@ public class DoctorService {
                 } else if (ins.getVaccinationCoverage() != null) {
                     throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format(INSURED_IS_VACCINATED, insuredAmka));
                 } else {
-                    throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format(INSURED_HAS_NOT_RESERVATION2, insuredAmka));
+                    throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format(INSURED_HAS_NOT_RESERVATION, insuredAmka));
                 }
             }
 

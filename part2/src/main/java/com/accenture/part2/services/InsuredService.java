@@ -85,7 +85,7 @@ public class InsuredService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format(INSURED_WITH_AMKA_NOT_FOUND, insuredAmka));
         }
         if (insured.getReservation() == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format(INSURED_HAS_NOT_RESERVATION, insuredAmka));
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format(INSURED_HAS_NOT_RESERVATION_MUST_UNSELECT, insuredAmka));
         }
         if (insured.getTimesReservationChanged() < 2) {
             reservationService.deleteReservation(insured.getReservation());
