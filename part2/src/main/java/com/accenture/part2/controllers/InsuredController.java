@@ -4,7 +4,6 @@ import com.accenture.part2.models.Insured;
 import com.accenture.part2.models.Reservation;
 import com.accenture.part2.models.Timeslot;
 import com.accenture.part2.services.InsuredService;
-import com.accenture.part2.services.ReservationService;
 import com.accenture.part2.services.TimeslotService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.UrlResource;
@@ -28,8 +27,6 @@ public class InsuredController {
     TimeslotService timeslotService;
     @Autowired
     InsuredService insuredService;
-    @Autowired
-    ReservationService reservationService;
 
     @GetMapping("/available/date")
     public Timeslot getAvailableTimeslotByDate(@RequestParam String date) {
