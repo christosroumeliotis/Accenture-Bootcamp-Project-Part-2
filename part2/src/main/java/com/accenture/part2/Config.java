@@ -5,7 +5,6 @@ import com.accenture.part2.models.Insured;
 import com.accenture.part2.models.Timeslot;
 import com.accenture.part2.services.DoctorService;
 import com.accenture.part2.services.InsuredService;
-import com.accenture.part2.services.ReservationService;
 import com.accenture.part2.services.TimeslotService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
@@ -14,7 +13,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class Config {
     @Bean
-    public CommandLineRunner commandLineRunner(InsuredService insuredService, DoctorService doctorService, TimeslotService timeslotService, ReservationService reservationService) {
+    public CommandLineRunner commandLineRunner(InsuredService insuredService, DoctorService doctorService, TimeslotService timeslotService) {
         return args -> {
             Doctor doctor1 = new Doctor("amka1", "Leo", "Pavlou");
             Doctor doctor2 = new Doctor("amka2", "Neo", "Petrou");

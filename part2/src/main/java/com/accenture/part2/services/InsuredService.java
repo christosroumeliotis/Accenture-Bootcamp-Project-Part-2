@@ -1,6 +1,7 @@
 package com.accenture.part2.services;
 
 import com.accenture.part2.models.*;
+import com.accenture.part2.utils.QRCodeGenerator;
 import com.google.zxing.WriterException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
