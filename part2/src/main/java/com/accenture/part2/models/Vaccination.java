@@ -41,5 +41,4 @@ public class Vaccination {
         this.expirationDate = expirationDate;
     }
 
-
 }

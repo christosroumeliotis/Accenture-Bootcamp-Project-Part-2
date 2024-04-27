@@ -1,6 +1,7 @@
 package com.accenture.part2.services;
 
 import com.accenture.part2.models.*;
+import com.accenture.part2.utils.QRCodeGenerator;
 import com.google.zxing.WriterException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -68,9 +69,9 @@ public class InsuredService {
             timeslot.setAvailable(false);
             return insured.getReservation();
         } else if (!timeslot.isAvailable()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format(TIMESLOT_IS_RESERVED, timeslotDate));
+            throw new ResponseStatusException(HttpStatus.CONFLICT, String.format(TIMESLOT_IS_RESERVED, timeslotDate));
         } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format(INSURED_HAS_RESERVATION, insuredAmka));
+            throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, String.format(INSURED_HAS_RESERVATION, insuredAmka));
         }
     }
 
@@ -85,7 +86,7 @@ public class InsuredService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format(INSURED_WITH_AMKA_NOT_FOUND, insuredAmka));
         }
         if (insured.getReservation() == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format(INSURED_HAS_NOT_RESERVATION, insuredAmka));
+            throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, String.format(INSURED_HAS_NOT_RESERVATION_MUST_UNSELECT, insuredAmka));
         }
         if (insured.getTimesReservationChanged() < 2) {
             reservationService.deleteReservation(insured.getReservation());
@@ -106,7 +107,7 @@ public class InsuredService {
                 if (insured.getVaccinationCoverage() != null) {
                     return (String.format(INSURED_ALREADY_VACCINATED, insuredAmka, insured.getVaccinationCoverage().getExpirationDate()));
                 } else
-                    throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format(INSURED_NOT_VACCINATED_YET, insuredAmka));
+                    throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, String.format(INSURED_NOT_VACCINATED_YET, insuredAmka));
         }
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format(INSURED_WITH_AMKA_NOT_FOUND, insuredAmka));
     }
@@ -127,7 +128,7 @@ public class InsuredService {
                     }
                     return path;
                 } else
-                    throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format(INSURED_NOT_VACCINATED_YET, insuredAmka));
+                    throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, String.format(INSURED_NOT_VACCINATED_YET, insuredAmka));
         }
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format(INSURED_WITH_AMKA_NOT_FOUND, insuredAmka));
     }

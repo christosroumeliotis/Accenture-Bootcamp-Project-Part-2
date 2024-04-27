@@ -30,7 +30,7 @@ public class TimeslotService {
                 if (t.isAvailable()) {
                     return t;
                 } else {
-                    throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format(FOUND_TIMESLOT_BUT_NOT_AVAILABLE, timeslot.getDate()));
+                    throw new ResponseStatusException(HttpStatus.CONFLICT, String.format(FOUND_TIMESLOT_BUT_NOT_AVAILABLE, timeslot.getDate()));
                 }
             }
         }
@@ -44,7 +44,7 @@ public class TimeslotService {
                 if (t.isAvailable()) {
                     return t;
                 } else {
-                    throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format(FOUND_TIMESLOT_BUT_NOT_AVAILABLE, date));
+                    throw new ResponseStatusException(HttpStatus.CONFLICT, String.format(FOUND_TIMESLOT_BUT_NOT_AVAILABLE, date));
                 }
             }
         }

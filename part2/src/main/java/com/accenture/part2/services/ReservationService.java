@@ -16,9 +16,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static com.accenture.part2.Constants.*;
@@ -47,10 +48,15 @@ public class ReservationService {
 
     public List<Reservation> getUpcomingReservations() {
         List<Reservation> upcomingReservations = new ArrayList<>();
-        LocalDate now = LocalDate.now();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("d/M/yyyy HH:mm");
+        Date now = new Date();
         for (Reservation reservation : reservations) {
-            if (LocalDate.parse(reservation.getTimeslot().getDate(), DateTimeFormatter.ofPattern("d/M/yyyy HH:mm")).isAfter(now)) {
-                upcomingReservations.add(reservation);
+            try {
+                if (simpleDateFormat.parse(reservation.getTimeslot().getDate()).after(now)) {
+                    upcomingReservations.add(reservation);
+                }
+            } catch (ParseException exc) {
+                // Do nothing
             }
         }
         if (upcomingReservations.isEmpty()) {
@@ -74,8 +80,7 @@ public class ReservationService {
         return reservationsByDate;
     }
 
-    public List<Reservation> getAllReservations(int page) {
-        int pageSize = 3;
+    public List<Reservation> getAllReservations(int page, int pageSize) {
         int totalPages = (int) Math.ceil((double) reservations.size() / pageSize);
 
         if (page < 1 || page > totalPages) {
@@ -86,6 +91,7 @@ public class ReservationService {
         int endIndex = Math.min(startIndex + pageSize, reservations.size());
 
         return reservations.subList(startIndex, endIndex);
+
     }
 
 

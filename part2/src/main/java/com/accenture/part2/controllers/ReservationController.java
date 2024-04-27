@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static com.accenture.part2.Constants.DEFAULT_PAGE_SIZE;
+
 @RestController
 @RequestMapping("/reservation")
 public class ReservationController {
@@ -20,22 +22,22 @@ public class ReservationController {
         return reservationService.getReservations();
     }
 
-    @GetMapping("/upcoming") // http://localhost:8081/reservation/upcoming
+    @GetMapping("/upcoming")
     public List<Reservation> getUpcomingReservations() {
         return reservationService.getUpcomingReservations();
     }
 
-    @GetMapping("/date") // http://localhost:8081/reservation/date?date=2/12/2024
+    @GetMapping("/date")
     public List<Reservation> getReservationsByDate(@RequestParam String date) {
         return reservationService.getReservationsByDate(date);
     }
 
-    @GetMapping("/{page}") //http://localhost:8081/reservations/2
-    public List<Reservation> getReservationsByPage(@PathVariable int page) {
-        return reservationService.getAllReservations(page);
+    @GetMapping("/page/{page}")
+    public List<Reservation> getReservationsByPage(@PathVariable int page, @RequestParam(defaultValue = DEFAULT_PAGE_SIZE) int pageSize) {
+        return reservationService.getAllReservations(page, pageSize);
     }
 
-    @GetMapping("/doctor/pdf") // http://localhost:8081/reservation/doctor/pdf?doctorAmka=amka1&date=28/4/2024
+    @GetMapping("/doctor/pdf")
     public void createPdf(@RequestParam String doctorAmka,
                           @RequestParam("date") String date, HttpServletResponse response) {
         response.setContentType("application/pdf");
