@@ -1,4 +1,4 @@
-## Vaccination Recording System
+## Vaccination Recording System Updated Using Spring Boot
 The Vaccination Recording System is a Java application designed to organize and record vaccinations for insured citizens.
 It allows insured citizens to book vaccination appointments and enables doctors to manage their appointments.
 
